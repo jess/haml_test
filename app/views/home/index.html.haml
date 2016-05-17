@@ -1,0 +1,26 @@
+%h1 Haml Behavior in production when using link to blocks
+%p Run app in production:
+%code RAILS_ENV=production rails s
+%p
+  Notice the below links. The first three are regular link to helpers, the last 3 are link to with
+  a block. The regular helpers properly insert a line after the link in the source, however the 
+  block helpers concat the tags. This causes a problem with inline elements, making them adjacent 
+  instead of having a space in between. Only happens in production.
+%p
+  =link_to "Regular link to", "#"
+  =link_to "Regular link to", "#"
+  =link_to "Regular link to", "#"
+  =link_to "#" do
+    Block link to
+  =link_to "#" do
+    Block link to
+  =link_to "#" do
+    Block link to
+
+%p Here's what the source currently looks like:
+%p
+  %img{src: "source.png" }
+
+%p Here's what the source should (desired) look like:
+%p
+  %img{src: "source-desired.png" }
